@@ -206,7 +206,7 @@ export default function HomePage() {
               {menuSummary.categories.map((category, index) => (
                 <Link key={category.id} href={`/menu?category=${category.id}`} className="block h-full">
                   <Card
-                    className="group cursor-pointer hover:shadow-lg hover:border-primary/50 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 h-full min-h-[96px]"
+                    className="group cursor-pointer hover:shadow-lg hover:border-primary/50 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 h-28 sm:h-32"
                     style={{ animationDelay: `${index * 75}ms` }}
                     data-testid={`card-category-${category.id}`}
                   >
