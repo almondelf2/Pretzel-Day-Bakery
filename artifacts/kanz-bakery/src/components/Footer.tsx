@@ -46,7 +46,6 @@ export function Footer() {
           <div>
             <h3 className="font-serif font-semibold text-sm mb-3 text-foreground">{t('footer.contact')}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>{t('footer.address')}</li>
               <li>{t('footer.weekdays')}</li>
               <li>{t('footer.sunday')}</li>
             </ul>
