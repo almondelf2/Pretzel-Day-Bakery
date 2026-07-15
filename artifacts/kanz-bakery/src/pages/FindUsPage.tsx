@@ -76,10 +76,10 @@ function MapController({ target }: { target: [number, number] | null }) {
 // ---------------------------------------------------------------------------
 export default function FindUsPage() {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState<string>(BRANCHES[0].id);
+  const [selected, setSelected] = useState<string | null>(null);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const selectedBranch = BRANCHES.find(b => b.id === selected)!;
+  const selectedCoords = selected ? BRANCHES.find(b => b.id === selected)?.coords ?? null : null;
 
   const handleSelectBranch = (id: string) => {
     setSelected(id);
@@ -111,8 +111,53 @@ export default function FindUsPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
-            {/* Branch list */}
-            <div className="lg:w-[400px] shrink-0 space-y-4">
+            {/* Map — left on desktop, top on mobile */}
+            <div className="flex-1 min-h-[360px] lg:min-h-0 order-first">
+              <div className="lg:sticky lg:top-24 rounded-2xl overflow-hidden border border-border shadow-md"
+                   style={{ height: 'min(600px, 70dvh)' }}>
+                <MapContainer
+                  center={MAP_CENTER}
+                  zoom={MAP_ZOOM}
+                  scrollWheelZoom={false}
+                  style={{ width: '100%', height: '100%' }}
+                  zoomControl={false}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <MapController target={selectedCoords} />
+                  {BRANCHES.map(branch => (
+                    <Marker
+                      key={branch.id}
+                      position={branch.coords}
+                      icon={makePinIcon(branch.id === selected)}
+                      eventHandlers={{ click: () => handleSelectBranch(branch.id) }}
+                    >
+                      <Popup>
+                        <div className="text-sm font-medium">
+                          {t(`findUs.branches.${branch.id}.name`)}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-0.5">
+                          {t(`findUs.branches.${branch.id}.address`)}
+                        </div>
+                        <a
+                          href={branch.mapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-blue-600 hover:underline mt-1 block"
+                        >
+                          {t('findUs.getDirections')} →
+                        </a>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
+              </div>
+            </div>
+
+            {/* Branch list — right on desktop, bottom on mobile */}
+            <div className="lg:w-[380px] shrink-0 space-y-4">
               {BRANCHES.map((branch, i) => {
                 const isSelected = branch.id === selected;
                 return (
@@ -196,51 +241,6 @@ export default function FindUsPage() {
                   </div>
                 );
               })}
-            </div>
-
-            {/* Map */}
-            <div className="flex-1 min-h-[360px] lg:min-h-0">
-              <div className="lg:sticky lg:top-24 rounded-2xl overflow-hidden border border-border shadow-md"
-                   style={{ height: 'min(600px, 70dvh)' }}>
-                <MapContainer
-                  center={MAP_CENTER}
-                  zoom={MAP_ZOOM}
-                  scrollWheelZoom={false}
-                  style={{ width: '100%', height: '100%' }}
-                  zoomControl={false}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  <MapController target={selectedBranch.coords} />
-                  {BRANCHES.map(branch => (
-                    <Marker
-                      key={branch.id}
-                      position={branch.coords}
-                      icon={makePinIcon(branch.id === selected)}
-                      eventHandlers={{ click: () => handleSelectBranch(branch.id) }}
-                    >
-                      <Popup>
-                        <div className="text-sm font-medium">
-                          {t(`findUs.branches.${branch.id}.name`)}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-0.5">
-                          {t(`findUs.branches.${branch.id}.address`)}
-                        </div>
-                        <a
-                          href={branch.mapsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-blue-600 hover:underline mt-1 block"
-                        >
-                          {t('findUs.getDirections')} →
-                        </a>
-                      </Popup>
-                    </Marker>
-                  ))}
-                </MapContainer>
-              </div>
             </div>
 
           </div>
