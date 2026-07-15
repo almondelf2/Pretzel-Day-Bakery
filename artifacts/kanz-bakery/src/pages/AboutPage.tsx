@@ -159,7 +159,6 @@ export default function AboutPage() {
             {t('about.visit.subtitle')}
           </p>
           <div className="text-muted-foreground space-y-1 text-sm sm:text-base">
-            <p className="font-medium">{t('about.visit.address')}</p>
             <p>{t('about.visit.weekdays')}</p>
             <p>{t('about.visit.sunday')}</p>
           </div>
