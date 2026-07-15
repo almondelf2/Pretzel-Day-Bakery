@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { StarRating } from '@/components/StarRating';
 import { Skeleton } from '@/components/ui/skeleton';
+import { QuantityControl } from '@/components/QuantityControl';
 import { Award, ChevronLeft, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -167,6 +168,15 @@ export default function MenuItemDetailPage() {
                 {item.description}
               </p>
             )}
+
+            {/* Add to Order */}
+            <div className="max-w-xs">
+              <QuantityControl
+                item={{ id: item.id, name: item.name, price: item.price }}
+                available={item.available}
+                size="md"
+              />
+            </div>
 
             {!item.available && (
               <div className="p-4 rounded-lg bg-muted border border-border">

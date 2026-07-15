@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { StarRating } from '@/components/StarRating';
 import { Skeleton } from '@/components/ui/skeleton';
+import { QuantityControl } from '@/components/QuantityControl';
 import { Award } from 'lucide-react';
 
 export default function MenuPage() {
@@ -51,9 +52,9 @@ export default function MenuPage() {
             </Button>
             {loadingCategories ? (
               <>
-                <Skeleton className="h-9 w-24" />
-                <Skeleton className="h-9 w-24" />
-                <Skeleton className="h-9 w-24" />
+                <Skeleton className="h-9 w-24 shrink-0" />
+                <Skeleton className="h-9 w-24 shrink-0" />
+                <Skeleton className="h-9 w-24 shrink-0" />
               </>
             ) : (
               categories?.map((category) => (
@@ -78,12 +79,13 @@ export default function MenuPage() {
           {loadingItems ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
-                <Card key={i}>
+                <Card key={i} className="overflow-hidden">
                   <Skeleton className="w-full h-48" />
-                  <CardContent className="p-6 space-y-3">
-                    <Skeleton className="h-6 w-3/4" />
+                  <CardContent className="p-4 space-y-3">
+                    <Skeleton className="h-5 w-3/4" />
                     <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-1/2" />
+                    <Skeleton className="h-4 w-2/3" />
+                    <Skeleton className="h-9 w-full mt-2" />
                   </CardContent>
                 </Card>
               ))}
@@ -96,74 +98,90 @@ export default function MenuPage() {
                   <span> in {categories.find(c => c.id === selectedCategory)?.name}</span>
                 )}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
                 {menuItems.map((item, index) => (
-                  <Link key={item.id} href={`/menu/${item.id}`}>
-                    <Card 
-                      className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden animate-in fade-in slide-in-from-bottom-4"
-                      style={{ animationDelay: `${index * 50}ms` }}
-                      data-testid={`card-menu-item-${item.id}`}
-                    >
-                      <div className="relative h-48 overflow-hidden bg-muted">
-                        {item.imageUrl ? (
-                          <img 
-                            src={item.imageUrl} 
-                            alt={item.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                            <span className="text-muted-foreground text-sm">No image</span>
-                          </div>
-                        )}
-                        {item.featured && (
-                          <div className="absolute top-3 right-3">
-                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary text-primary-foreground text-xs font-medium">
-                              <Award className="w-3 h-3" />
-                              Featured
-                            </span>
-                          </div>
-                        )}
-                        {!item.available && (
-                          <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
-                            <span className="text-sm font-medium text-muted-foreground">
-                              Currently Unavailable
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <CardContent className="p-6 space-y-3">
-                        <div>
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <h3 className="font-serif font-semibold text-lg text-foreground group-hover:text-primary transition-colors leading-tight" data-testid={`text-name-${item.id}`}>
-                              {item.name}
-                            </h3>
-                            <span className="text-xs text-muted-foreground whitespace-nowrap">
-                              {item.categoryName}
-                            </span>
-                          </div>
-                          {item.description && (
-                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                              {item.description}
-                            </p>
+                  <div key={item.id} className="flex flex-col h-full">
+                    <Link href={`/menu/${item.id}`} className="flex flex-col flex-1">
+                      <Card
+                        className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden animate-in fade-in slide-in-from-bottom-4 flex flex-col h-full"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                        data-testid={`card-menu-item-${item.id}`}
+                      >
+                        {/* Image — fixed height */}
+                        <div className="relative h-48 shrink-0 overflow-hidden bg-muted">
+                          {item.imageUrl ? (
+                            <img
+                              src={item.imageUrl}
+                              alt={item.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                              <span className="text-muted-foreground text-sm">No image</span>
+                            </div>
                           )}
-                        </div>
-                        <div className="flex items-center justify-between pt-2">
-                          <p className="font-semibold text-lg text-foreground" data-testid={`text-price-${item.id}`}>
-                            ${item.price.toFixed(2)}
-                          </p>
-                          {item.averageRating && item.ratingCount > 0 && (
-                            <div className="flex items-center gap-1">
-                              <StarRating rating={item.averageRating} size="sm" />
-                              <span className="text-xs text-muted-foreground">
-                                ({item.ratingCount})
+                          {item.featured && (
+                            <div className="absolute top-3 right-3">
+                              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                                <Award className="w-3 h-3" />
+                                Featured
                               </span>
                             </div>
                           )}
+                          {!item.available && (
+                            <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                              <span className="text-sm font-medium text-muted-foreground">Currently Unavailable</span>
+                            </div>
+                          )}
                         </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+
+                        {/* Content — fills remaining height */}
+                        <CardContent className="p-4 flex flex-col flex-1">
+                          {/* Name + category + description — grows to fill */}
+                          <div className="flex-1 space-y-1 mb-3">
+                            <div className="flex items-start justify-between gap-2">
+                              <h3
+                                className="font-serif font-semibold text-base text-foreground group-hover:text-primary transition-colors leading-snug"
+                                data-testid={`text-name-${item.id}`}
+                              >
+                                {item.name}
+                              </h3>
+                              <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0 mt-0.5">
+                                {item.categoryName}
+                              </span>
+                            </div>
+                            {item.description && (
+                              <p className="text-sm text-muted-foreground line-clamp-2 leading-snug">
+                                {item.description}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Price + rating — always at same vertical position */}
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="font-semibold text-lg text-foreground" data-testid={`text-price-${item.id}`}>
+                              ${item.price.toFixed(2)}
+                            </p>
+                            {item.averageRating != null && item.ratingCount > 0 && (
+                              <div className="flex items-center gap-1">
+                                <StarRating rating={item.averageRating} size="sm" />
+                                <span className="text-xs text-muted-foreground">({item.ratingCount})</span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Add to Order — always at bottom */}
+                          <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+                            <QuantityControl
+                              item={{ id: item.id, name: item.name, price: item.price }}
+                              available={item.available}
+                              size="sm"
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </div>
                 ))}
               </div>
             </>

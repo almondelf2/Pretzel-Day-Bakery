@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Route, Switch, Router as WouterRouter } from 'wouter';
 import { Header } from '@/components/Header';
+import { CartProvider } from '@/contexts/CartContext';
 import { Footer } from '@/components/Footer';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -35,12 +36,14 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
+      <CartProvider>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

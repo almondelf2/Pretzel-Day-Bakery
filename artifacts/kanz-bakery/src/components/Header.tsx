@@ -2,10 +2,12 @@ import { Link, useLocation } from 'wouter';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useCart } from '@/contexts/CartContext';
 
 export function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -37,7 +39,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive(link.href)
                     ? 'bg-accent text-accent-foreground'
                     : 'text-foreground/70 hover:text-foreground hover:bg-muted'
@@ -45,6 +47,14 @@ export function Header() {
                 data-testid={`link-nav-${link.label.toLowerCase()}`}
               >
                 {link.label}
+                {link.label === 'Order' && totalItems > 0 && (
+                  <span
+                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center leading-none"
+                    data-testid="badge-cart-count"
+                  >
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
@@ -70,7 +80,7 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  className={`relative flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.href)
                       ? 'bg-accent text-accent-foreground'
                       : 'text-foreground/70 hover:text-foreground hover:bg-muted'
@@ -78,6 +88,11 @@ export function Header() {
                   data-testid={`link-mobile-${link.label.toLowerCase()}`}
                 >
                   {link.label}
+                  {link.label === 'Order' && totalItems > 0 && (
+                    <span className="min-w-[20px] h-5 px-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">
+                      {totalItems > 99 ? '99+' : totalItems}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>
