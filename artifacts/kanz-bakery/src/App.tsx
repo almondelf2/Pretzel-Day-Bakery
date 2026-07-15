@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -14,9 +16,21 @@ import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
 
+/** Keeps <html dir> and <html lang> in sync with i18next language */
+function DirectionSync() {
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    const dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = dir;
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+  return null;
+}
+
 function Router() {
   return (
     <div className="min-h-[100dvh] flex flex-col">
+      <DirectionSync />
       <Header />
       <main className="flex-1">
         <Switch>

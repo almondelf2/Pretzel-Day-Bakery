@@ -1,58 +1,64 @@
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Users, Award, Clock } from 'lucide-react';
 
+const VALUE_ICONS = [Heart, Users, Award, Clock];
+const VALUE_KEYS = ['handcrafted', 'community', 'quality', 'time'] as const;
+
 export default function AboutPage() {
+  const { t } = useTranslation();
+
+  const teamMembers = t('about.team.members', { returnObjects: true }) as Array<{
+    name: string;
+    role: string;
+    bio: string;
+  }>;
+
+  const teamImages = [
+    '/images/team/sarah-martinez.jpg',
+    '/images/team/james-chen.jpg',
+    '/images/team/maya-thompson.jpg',
+  ];
+
   return (
     <div className="min-h-[100dvh] flex flex-col">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-background py-16 sm:py-24">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-background py-14 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <h1 className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-foreground tracking-tight">
-              Our Story
+              {t('about.hero.title')}
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              A neighborhood bakery built on tradition, warmth, and the simple joy 
-              of breaking bread together.
+            <p className="text-base sm:text-xl text-muted-foreground leading-relaxed">
+              {t('about.hero.subtitle')}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="py-16 sm:py-24">
+      {/* Story */}
+      <section className="py-14 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 animate-in fade-in slide-in-from-left-4 duration-700">
-              <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
-                Fifteen Years of Fresh Starts
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+            <div className="space-y-5 sm:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 order-2 lg:order-1">
+              <h2 className="font-serif font-bold text-2xl sm:text-4xl text-foreground">
+                {t('about.story.title')}
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  Kanz Bakery opened its doors in 2009 with a simple promise: to bake bread 
-                  the way your grandmother did — slowly, carefully, with hands that care.
-                </p>
-                <p>
-                  We wake before sunrise to shape dough that's been rising overnight. 
-                  By the time you walk through our doors, the croissants are still warm, 
-                  the sourdough is crackling, and the air smells like butter and possibility.
-                </p>
-                <p>
-                  What started as a two-person operation has grown into a beloved neighborhood 
-                  fixture. But we've kept what matters: every loaf is still shaped by hand, 
-                  every cake is still custom, and every customer is still greeted by name.
-                </p>
-                <p>
-                  We don't use shortcuts. We don't rush fermentation. We don't compromise on 
-                  ingredients. Because good bread takes time, and you're worth it.
-                </p>
+              <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                <p>{t('about.story.p1')}</p>
+                <p>{t('about.story.p2')}</p>
+                <p>{t('about.story.p3')}</p>
+                <p>{t('about.story.p4')}</p>
               </div>
             </div>
 
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl animate-in fade-in slide-in-from-right-4 duration-700 delay-150" data-testid="img-storefront">
+            <div
+              className="relative h-[280px] sm:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 order-1 lg:order-2"
+              data-testid="img-storefront"
+            >
               <img
                 src="/images/bakery-storefront.jpg"
-                alt="Inside Kanz Bakery"
+                alt={t('about.story.imgAlt')}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -60,122 +66,79 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 sm:py-24 bg-muted/20">
+      {/* Values */}
+      <section className="py-14 sm:py-24 bg-muted/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
-              What We Believe
+          <div className="text-center mb-10 sm:mb-12 space-y-3 sm:space-y-4">
+            <h2 className="font-serif font-bold text-2xl sm:text-4xl text-foreground">
+              {t('about.values.title')}
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              The values that shape every loaf we bake
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
+              {t('about.values.subtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="animate-in fade-in slide-in-from-bottom-4" style={{ animationDelay: '0ms' }}>
-              <CardContent className="p-6 space-y-4 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Heart className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-serif font-semibold text-lg text-foreground">
-                  Handcrafted
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Every pastry is shaped by skilled hands, not machines. We believe in the 
-                  human touch.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="animate-in fade-in slide-in-from-bottom-4" style={{ animationDelay: '100ms' }}>
-              <CardContent className="p-6 space-y-4 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-serif font-semibold text-lg text-foreground">
-                  Community
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  You're not a customer — you're a neighbor. We remember your order and 
-                  ask about your day.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="animate-in fade-in slide-in-from-bottom-4" style={{ animationDelay: '200ms' }}>
-              <CardContent className="p-6 space-y-4 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Award className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-serif font-semibold text-lg text-foreground">
-                  Quality
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Local flour, real butter, organic eggs. No preservatives, no shortcuts, 
-                  no compromises.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="animate-in fade-in slide-in-from-bottom-4" style={{ animationDelay: '300ms' }}>
-              <CardContent className="p-6 space-y-4 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Clock className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-serif font-semibold text-lg text-foreground">
-                  Time
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Good bread can't be rushed. We give dough the hours it needs to develop 
-                  flavor and texture.
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {VALUE_KEYS.map((key, index) => {
+              const Icon = VALUE_ICONS[index];
+              return (
+                <Card
+                  key={key}
+                  className="animate-in fade-in slide-in-from-bottom-4"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4 text-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                    </div>
+                    <h3 className="font-serif font-semibold text-base sm:text-lg text-foreground">
+                      {t(`about.values.${key}.title`)}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      {t(`about.values.${key}.desc`)}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-16 sm:py-24">
+      {/* Team */}
+      <section className="py-14 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
-              Meet the Bakers
+          <div className="text-center mb-10 sm:mb-12 space-y-3 sm:space-y-4">
+            <h2 className="font-serif font-bold text-2xl sm:text-4xl text-foreground">
+              {t('about.team.title')}
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              The people behind your morning pastry
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
+              {t('about.team.subtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: 'Sarah Martinez', role: 'Head Baker & Founder', bio: 'Started Kanz with a sourdough starter and a dream. Still wakes at 4am every day.', img: '/images/team/sarah-martinez.jpg' },
-              { name: 'James Chen', role: 'Pastry Chef', bio: 'Trained in Paris, returned home to make croissants that rival the Seine.', img: '/images/team/james-chen.jpg' },
-              { name: 'Maya Thompson', role: 'Cake Designer', bio: 'Turns celebrations into edible art. Every cake tells a story.', img: '/images/team/maya-thompson.jpg' },
-            ].map((member, index) => (
-              <Card 
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            {teamMembers.map((member, index) => (
+              <Card
                 key={member.name}
                 className="animate-in fade-in slide-in-from-bottom-4"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6 space-y-4 text-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto ring-2 ring-primary/20">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden mx-auto ring-2 ring-primary/20">
                     <img
-                      src={member.img}
+                      src={teamImages[index]}
                       alt={member.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="font-serif font-semibold text-lg text-foreground">
+                    <h3 className="font-serif font-semibold text-base sm:text-lg text-foreground">
                       {member.name}
                     </h3>
-                    <p className="text-sm text-primary font-medium mt-1">
-                      {member.role}
-                    </p>
+                    <p className="text-sm text-primary font-medium mt-1">{member.role}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {member.bio}
                   </p>
                 </CardContent>
@@ -185,19 +148,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-primary/10 via-secondary/5 to-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
-            Visit Us Soon
+      {/* Visit CTA */}
+      <section className="py-14 sm:py-24 bg-gradient-to-br from-primary/10 via-secondary/5 to-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6">
+          <h2 className="font-serif font-bold text-2xl sm:text-4xl text-foreground">
+            {t('about.visit.title')}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We're on Baker Street, just past the park. Come for the bread, stay for the warmth.
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t('about.visit.subtitle')}
           </p>
-          <div className="text-muted-foreground space-y-1">
-            <p className="font-medium">123 Baker Street</p>
-            <p>Monday - Saturday: 7am - 7pm</p>
-            <p>Sunday: 8am - 5pm</p>
+          <div className="text-muted-foreground space-y-1 text-sm sm:text-base">
+            <p className="font-medium">{t('about.visit.address')}</p>
+            <p>{t('about.visit.weekdays')}</p>
+            <p>{t('about.visit.sunday')}</p>
           </div>
         </div>
       </section>

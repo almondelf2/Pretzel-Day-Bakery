@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingBag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 
@@ -10,6 +11,7 @@ interface QuantityControlProps {
 
 export function QuantityControl({ item, available = true, size = 'md' }: QuantityControlProps) {
   const { getQuantity, addItem, updateQuantity } = useCart();
+  const { t } = useTranslation();
   const qty = getQuantity(item.id);
 
   const iconSize = size === 'sm' ? 'w-3 h-3' : 'w-4 h-4';
@@ -19,7 +21,7 @@ export function QuantityControl({ item, available = true, size = 'md' }: Quantit
   if (!available) {
     return (
       <div className="w-full py-2 text-center text-sm text-muted-foreground">
-        Currently unavailable
+        {t('qty.unavailable')}
       </div>
     );
   }
@@ -33,7 +35,7 @@ export function QuantityControl({ item, available = true, size = 'md' }: Quantit
         data-testid={`button-add-to-order-${item.id}`}
       >
         <ShoppingBag className={iconSize} />
-        Add to Order
+        {t('qty.addToOrder')}
       </Button>
     );
   }

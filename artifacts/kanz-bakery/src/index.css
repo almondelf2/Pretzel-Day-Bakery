@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap');
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
@@ -295,6 +295,22 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+}
+
+/* Arabic font — applied when html[lang="ar"] is set by DirectionSync */
+:root:lang(ar) {
+  --app-font-sans: 'Cairo', sans-serif;
+  --app-font-serif: 'Cairo', serif;
+}
+
+/* Smooth direction transitions */
+* {
+  transition-property: none;
+}
+
+/* RTL: flip icon-only chevrons that are inside .rtl-flip wrappers */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
 }
 
 /* Grain texture overlay */

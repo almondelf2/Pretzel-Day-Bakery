@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCreateOrder, useListMenuItems, OrderInputType } from '@workspace/api-client-react';
 import { useCart } from '@/contexts/CartContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,6 +18,7 @@ interface OrderItemWithDetails extends OrderItem {
 }
 
 export default function OrderPage() {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const createOrderMutation = useCreateOrder();
   const { data: menuItems } = useListMenuItems();
@@ -43,73 +45,46 @@ export default function OrderPage() {
 
   const handleAddItem = () => {
     if (!selectedMenuItem) return;
-
     const menuItem = menuItems?.find(item => item.id === Number(selectedMenuItem));
     if (!menuItem) return;
-
-    const existingItemIndex = items.findIndex(item => item.menuItemId === menuItem.id);
-    
-    if (existingItemIndex >= 0) {
-      const updatedItems = [...items];
-      updatedItems[existingItemIndex].quantity += 1;
-      setItems(updatedItems);
+    const existingIndex = items.findIndex(item => item.menuItemId === menuItem.id);
+    if (existingIndex >= 0) {
+      const updated = [...items];
+      updated[existingIndex].quantity += 1;
+      setItems(updated);
     } else {
-      setItems([
-        ...items,
-        {
-          menuItemId: menuItem.id,
-          quantity: 1,
-          notes: null,
-          name: menuItem.name,
-          price: menuItem.price,
-        },
-      ]);
+      setItems([...items, { menuItemId: menuItem.id, quantity: 1, notes: null, name: menuItem.name, price: menuItem.price }]);
     }
     setSelectedMenuItem('');
   };
 
   const handleUpdateQuantity = (menuItemId: number, delta: number) => {
-    setItems(items.map(item => {
-      if (item.menuItemId === menuItemId) {
-        const newQuantity = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    }));
+    setItems(items.map(item =>
+      item.menuItemId === menuItemId
+        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+        : item
+    ));
   };
 
   const handleRemoveItem = (menuItemId: number) => {
     setItems(items.filter(item => item.menuItemId !== menuItemId));
   };
 
-  const handleUpdateItemNotes = (menuItemId: number, notes: string) => {
-    setItems(items.map(item => {
-      if (item.menuItemId === menuItemId) {
-        return { ...item, notes: notes || null };
-      }
-      return item;
-    }));
+  const handleUpdateItemNotes = (menuItemId: number, n: string) => {
+    setItems(items.map(item =>
+      item.menuItemId === menuItemId ? { ...item, notes: n || null } : item
+    ));
   };
 
-  const calculateTotal = () => {
-    return items.reduce((total, item) => {
-      const price = item.price || 0;
-      return total + (price * item.quantity);
-    }, 0);
-  };
+  const calculateTotal = () =>
+    items.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (items.length === 0) {
-      toast({
-        title: 'No items selected',
-        description: 'Please add at least one item to your order',
-        variant: 'destructive',
-      });
+      toast({ title: t('order.toast.noItemsTitle'), description: t('order.toast.noItemsDesc'), variant: 'destructive' });
       return;
     }
-
     const orderData = {
       type: orderType,
       customerName: customerName.trim(),
@@ -119,38 +94,19 @@ export default function OrderPage() {
       eventLocation: eventLocation.trim() || null,
       guestCount: guestCount ? Number(guestCount) : null,
       notes: notes.trim() || null,
-      items: items.map(({ menuItemId, quantity, notes }) => ({
-        menuItemId,
-        quantity,
-        notes,
-      })),
+      items: items.map(({ menuItemId, quantity, notes }) => ({ menuItemId, quantity, notes })),
     };
-
     createOrderMutation.mutate(
       { data: orderData },
       {
         onSuccess: () => {
-          toast({
-            title: 'Order Submitted!',
-            description: 'We\'ll be in touch shortly to confirm your order.',
-          });
+          toast({ title: t('order.toast.successTitle'), description: t('order.toast.successDesc') });
           clearCart();
-          // Reset form
-          setCustomerName('');
-          setEmail('');
-          setPhone('');
-          setEventDate('');
-          setEventLocation('');
-          setGuestCount('');
-          setNotes('');
-          setItems([]);
+          setCustomerName(''); setEmail(''); setPhone(''); setEventDate('');
+          setEventLocation(''); setGuestCount(''); setNotes(''); setItems([]);
         },
         onError: (error: any) => {
-          toast({
-            title: 'Error',
-            description: error?.message || 'Failed to submit order',
-            variant: 'destructive',
-          });
+          toast({ title: t('order.toast.errorTitle'), description: error?.message || t('order.toast.errorDesc'), variant: 'destructive' });
         },
       }
     );
@@ -158,106 +114,98 @@ export default function OrderPage() {
 
   return (
     <div className="min-h-[100dvh] flex flex-col">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-background py-12 sm:py-16">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-background py-10 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <h1 className="font-serif font-bold text-4xl sm:text-5xl text-foreground tracking-tight">
-              Schedule Your Order
+          <div className="max-w-3xl mx-auto text-center space-y-3 sm:space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <h1 className="font-serif font-bold text-3xl sm:text-5xl text-foreground tracking-tight">
+              {t('order.hero.title')}
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Perfect for celebrations, office events, or stocking up on favorites
+            <p className="text-sm sm:text-lg text-muted-foreground">
+              {t('order.hero.subtitle')}
             </p>
           </div>
         </div>
       </section>
 
       {/* Order Form */}
-      <section className="py-12 sm:py-16">
+      <section className="py-10 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Order Details */}
-              <div className="lg:col-span-2 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+              {/* Left column */}
+              <div className="lg:col-span-2 space-y-5 sm:space-y-6">
                 {/* Order Type */}
-                <Card className="animate-in fade-in slide-in-from-left-4 duration-700">
-                  <CardHeader>
-                    <CardTitle className="font-serif">Order Type</CardTitle>
+                <Card className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <CardHeader className="pb-3 sm:pb-6">
+                    <CardTitle className="font-serif text-base sm:text-xl">{t('order.type.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
                       <button
                         type="button"
                         onClick={() => setOrderType('bulk')}
-                        className={`p-4 rounded-lg border-2 transition-all ${
-                          orderType === 'bulk'
-                            ? 'border-primary bg-primary/5'
-                            : 'border-border hover:border-primary/50'
+                        className={`p-3 sm:p-4 rounded-lg border-2 transition-all text-start ${
+                          orderType === 'bulk' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
                         }`}
                         data-testid="button-type-bulk"
                       >
-                        <p className="font-semibold text-foreground">Bulk Order</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Large quantity of specific items
-                        </p>
+                        <p className="font-semibold text-foreground text-sm sm:text-base">{t('order.type.bulk.title')}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{t('order.type.bulk.desc')}</p>
                       </button>
                       <button
                         type="button"
                         onClick={() => setOrderType('catering')}
-                        className={`p-4 rounded-lg border-2 transition-all ${
-                          orderType === 'catering'
-                            ? 'border-primary bg-primary/5'
-                            : 'border-border hover:border-primary/50'
+                        className={`p-3 sm:p-4 rounded-lg border-2 transition-all text-start ${
+                          orderType === 'catering' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
                         }`}
                         data-testid="button-type-catering"
                       >
-                        <p className="font-semibold text-foreground">Catering</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Event or party service
-                        </p>
+                        <p className="font-semibold text-foreground text-sm sm:text-base">{t('order.type.catering.title')}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{t('order.type.catering.desc')}</p>
                       </button>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Contact Information */}
-                <Card className="animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
-                  <CardHeader>
-                    <CardTitle className="font-serif">Contact Information</CardTitle>
+                {/* Contact */}
+                <Card className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+                  <CardHeader className="pb-3 sm:pb-6">
+                    <CardTitle className="font-serif text-base sm:text-xl">{t('order.contact.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="customerName">Full Name *</Label>
+                      <Label htmlFor="customerName">{t('order.contact.name')} *</Label>
                       <Input
                         id="customerName"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        placeholder="Enter your name"
+                        placeholder={t('order.contact.namePlaceholder')}
                         required
                         data-testid="input-customer-name"
                       />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email *</Label>
+                        <Label htmlFor="email">{t('order.contact.email')} *</Label>
                         <Input
                           id="email"
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="your@email.com"
+                          placeholder={t('order.contact.emailPlaceholder')}
                           required
                           data-testid="input-email"
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Phone *</Label>
+                        <Label htmlFor="phone">{t('order.contact.phone')} *</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          placeholder="(555) 123-4567"
+                          placeholder={t('order.contact.phonePlaceholder')}
                           required
                           data-testid="input-phone"
                         />
@@ -267,21 +215,21 @@ export default function OrderPage() {
                 </Card>
 
                 {/* Event Details */}
-                <Card className="animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
-                  <CardHeader>
-                    <CardTitle className="font-serif">Event Details</CardTitle>
+                <Card className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                  <CardHeader className="pb-3 sm:pb-6">
+                    <CardTitle className="font-serif text-base sm:text-xl">{t('order.event.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="eventDate">Event Date *</Label>
+                      <Label htmlFor="eventDate">{t('order.event.date')} *</Label>
                       <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                        <Calendar className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                         <Input
                           id="eventDate"
                           type="date"
                           value={eventDate}
                           onChange={(e) => setEventDate(e.target.value)}
-                          className="pl-10"
+                          className="ps-10"
                           required
                           data-testid="input-event-date"
                         />
@@ -290,31 +238,31 @@ export default function OrderPage() {
                     {orderType === 'catering' && (
                       <>
                         <div className="space-y-2">
-                          <Label htmlFor="eventLocation">Event Location</Label>
+                          <Label htmlFor="eventLocation">{t('order.event.location')}</Label>
                           <div className="relative">
-                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                            <MapPin className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                             <Input
                               id="eventLocation"
                               value={eventLocation}
                               onChange={(e) => setEventLocation(e.target.value)}
-                              placeholder="Address or venue name"
-                              className="pl-10"
+                              placeholder={t('order.event.locationPlaceholder')}
+                              className="ps-10"
                               data-testid="input-event-location"
                             />
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="guestCount">Guest Count</Label>
+                          <Label htmlFor="guestCount">{t('order.event.guests')}</Label>
                           <div className="relative">
-                            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                            <Users className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                             <Input
                               id="guestCount"
                               type="number"
                               min="1"
                               value={guestCount}
                               onChange={(e) => setGuestCount(e.target.value)}
-                              placeholder="Number of guests"
-                              className="pl-10"
+                              placeholder={t('order.event.guestsPlaceholder')}
+                              className="ps-10"
                               data-testid="input-guest-count"
                             />
                           </div>
@@ -322,12 +270,12 @@ export default function OrderPage() {
                       </>
                     )}
                     <div className="space-y-2">
-                      <Label htmlFor="notes">Special Requests</Label>
+                      <Label htmlFor="notes">{t('order.event.notes')}</Label>
                       <Textarea
                         id="notes"
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Dietary restrictions, delivery instructions, etc."
+                        placeholder={t('order.event.notesPlaceholder')}
                         rows={3}
                         data-testid="textarea-notes"
                       />
@@ -336,55 +284,50 @@ export default function OrderPage() {
                 </Card>
 
                 {/* Item Selection */}
-                <Card className="animate-in fade-in slide-in-from-left-4 duration-700 delay-300">
-                  <CardHeader>
-                    <CardTitle className="font-serif">Select Items</CardTitle>
+                <Card className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+                  <CardHeader className="pb-3 sm:pb-6">
+                    <CardTitle className="font-serif text-base sm:text-xl">{t('order.items.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex gap-2">
                       <Select value={selectedMenuItem} onValueChange={setSelectedMenuItem}>
                         <SelectTrigger className="flex-1" data-testid="select-menu-item">
-                          <SelectValue placeholder="Choose an item" />
+                          <SelectValue placeholder={t('order.items.choosePlaceholder')} />
                         </SelectTrigger>
                         <SelectContent>
                           {menuItems?.map((item) => (
                             <SelectItem key={item.id} value={item.id.toString()}>
-                              {item.name} - ${item.price.toFixed(2)}
+                              {item.name} – ${item.price.toFixed(2)}
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
-                      <Button 
-                        type="button" 
-                        onClick={handleAddItem}
-                        disabled={!selectedMenuItem}
-                        data-testid="button-add-item"
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add
+                      <Button type="button" onClick={handleAddItem} disabled={!selectedMenuItem} data-testid="button-add-item">
+                        <Plus className="w-4 h-4 me-1 sm:me-2" />
+                        <span className="hidden sm:inline">{t('order.items.add')}</span>
                       </Button>
                     </div>
 
                     {items.length > 0 && (
                       <div className="space-y-3 pt-4 border-t border-border">
                         {items.map((item) => (
-                          <div 
-                            key={item.menuItemId} 
+                          <div
+                            key={item.menuItemId}
                             className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
                             data-testid={`order-item-${item.menuItemId}`}
                           >
-                            <div className="flex-1 space-y-2">
+                            <div className="flex-1 space-y-2 min-w-0">
                               <div className="flex items-start justify-between gap-2">
-                                <div>
-                                  <p className="font-medium text-foreground">{item.name}</p>
-                                  <p className="text-sm text-muted-foreground">
-                                    ${item.price?.toFixed(2)} each
+                                <div className="min-w-0">
+                                  <p className="font-medium text-foreground text-sm sm:text-base truncate">{item.name}</p>
+                                  <p className="text-xs sm:text-sm text-muted-foreground">
+                                    ${item.price?.toFixed(2)} {t('order.items.each')}
                                   </p>
                                 </div>
                                 <button
                                   type="button"
                                   onClick={() => handleRemoveItem(item.menuItemId)}
-                                  className="text-muted-foreground hover:text-destructive transition-colors"
+                                  className="text-muted-foreground hover:text-destructive transition-colors shrink-0"
                                   data-testid={`button-remove-${item.menuItemId}`}
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -392,21 +335,17 @@ export default function OrderPage() {
                               </div>
                               <div className="flex items-center gap-2">
                                 <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8"
+                                  type="button" variant="outline" size="icon"
+                                  className="h-8 w-8 shrink-0"
                                   onClick={() => handleUpdateQuantity(item.menuItemId, -1)}
                                   data-testid={`button-decrease-${item.menuItemId}`}
                                 >
                                   <Minus className="w-3 h-3" />
                                 </Button>
-                                <span className="w-8 text-center font-medium">{item.quantity}</span>
+                                <span className="w-8 text-center font-medium text-sm">{item.quantity}</span>
                                 <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8"
+                                  type="button" variant="outline" size="icon"
+                                  className="h-8 w-8 shrink-0"
                                   onClick={() => handleUpdateQuantity(item.menuItemId, 1)}
                                   data-testid={`button-increase-${item.menuItemId}`}
                                 >
@@ -414,7 +353,7 @@ export default function OrderPage() {
                                 </Button>
                               </div>
                               <Input
-                                placeholder="Special instructions for this item..."
+                                placeholder={t('order.items.specialInstructions')}
                                 value={item.notes || ''}
                                 onChange={(e) => handleUpdateItemNotes(item.menuItemId, e.target.value)}
                                 className="text-sm"
@@ -429,24 +368,26 @@ export default function OrderPage() {
                 </Card>
               </div>
 
-              {/* Order Summary (Sidebar) */}
+              {/* Order Summary Sidebar */}
               <div className="lg:col-span-1">
-                <Card className="sticky top-24 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
-                  <CardHeader>
-                    <CardTitle className="font-serif">Order Summary</CardTitle>
+                <Card className="lg:sticky lg:top-24 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400">
+                  <CardHeader className="pb-3 sm:pb-6">
+                    <CardTitle className="font-serif text-base sm:text-xl">{t('order.summary.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Order Type:</span>
-                        <span className="font-medium capitalize">{orderType}</span>
+                        <span className="text-muted-foreground">{t('order.summary.type')}:</span>
+                        <span className="font-medium">
+                          {t(`order.typeLabel.${orderType}`)}
+                        </span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Items:</span>
+                        <span className="text-muted-foreground">{t('order.summary.items')}:</span>
                         <span className="font-medium">{items.length}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Total Quantity:</span>
+                        <span className="text-muted-foreground">{t('order.summary.totalQty')}:</span>
                         <span className="font-medium">
                           {items.reduce((sum, item) => sum + item.quantity, 0)}
                         </span>
@@ -455,28 +396,26 @@ export default function OrderPage() {
 
                     <div className="pt-4 border-t border-border">
                       <div className="flex justify-between items-baseline">
-                        <span className="text-sm text-muted-foreground">Estimated Total:</span>
-                        <span className="font-serif font-bold text-2xl text-primary" data-testid="text-total">
+                        <span className="text-sm text-muted-foreground">{t('order.summary.estimated')}:</span>
+                        <span className="font-serif font-bold text-xl sm:text-2xl text-primary" data-testid="text-total">
                           ${calculateTotal().toFixed(2)}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        Final price confirmed upon order review
-                      </p>
+                      <p className="text-xs text-muted-foreground mt-2">{t('order.summary.note')}</p>
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      className="w-full" 
+                    <Button
+                      type="submit"
+                      className="w-full"
                       size="lg"
                       disabled={createOrderMutation.isPending || items.length === 0}
                       data-testid="button-submit-order"
                     >
-                      {createOrderMutation.isPending ? 'Submitting...' : 'Submit Order'}
+                      {createOrderMutation.isPending ? t('order.summary.submitting') : t('order.summary.submit')}
                     </Button>
 
                     <p className="text-xs text-muted-foreground text-center">
-                      We'll contact you within 24 hours to confirm details and finalize your order.
+                      {t('order.summary.contact')}
                     </p>
                   </CardContent>
                 </Card>
