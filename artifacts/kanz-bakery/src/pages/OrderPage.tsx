@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCreateOrder, useListMenuItems, OrderInputType } from '@workspace/api-client-react';
+import { useCart } from '@/contexts/CartContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,7 @@ export default function OrderPage() {
   const { toast } = useToast();
   const createOrderMutation = useCreateOrder();
   const { data: menuItems } = useListMenuItems();
+  const { items: cartItems, clearCart } = useCart();
 
   const [orderType, setOrderType] = useState<OrderInputType>('bulk');
   const [customerName, setCustomerName] = useState('');
@@ -28,7 +30,15 @@ export default function OrderPage() {
   const [eventLocation, setEventLocation] = useState('');
   const [guestCount, setGuestCount] = useState('');
   const [notes, setNotes] = useState('');
-  const [items, setItems] = useState<OrderItemWithDetails[]>([]);
+  const [items, setItems] = useState<OrderItemWithDetails[]>(() =>
+    cartItems.map(ci => ({
+      menuItemId: ci.id,
+      quantity: ci.quantity,
+      notes: null,
+      name: ci.name,
+      price: ci.price,
+    }))
+  );
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>('');
 
   const handleAddItem = () => {
@@ -124,6 +134,7 @@ export default function OrderPage() {
             title: 'Order Submitted!',
             description: 'We\'ll be in touch shortly to confirm your order.',
           });
+          clearCart();
           // Reset form
           setCustomerName('');
           setEmail('');
