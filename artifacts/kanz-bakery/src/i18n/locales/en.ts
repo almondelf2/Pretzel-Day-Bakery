@@ -98,6 +98,11 @@ const en = {
           role: 'Savory Baker',
           bio: 'Runs the savory side with precision and a light hand. Also responsible for all in-store watercolor signage.',
         },
+        {
+          name: 'Kevin "Chumbo" Malone',
+          role: 'Baker',
+          bio: 'Kevin handles the pretzel dogs. He also handles a lot of the tasting. We\'ve stopped questioning it.',
+        },
       ],
     },
     visit: {

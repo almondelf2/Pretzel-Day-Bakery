@@ -14,7 +14,7 @@ export default function AboutPage() {
     bio: string;
   }>;
 
-  const teamInitials = ['WB', 'SH', 'PB'];
+  const teamInitials = ['WB', 'SH', 'PB', 'KM'];
 
   return (
     <div className="min-h-[100dvh] flex flex-col">
