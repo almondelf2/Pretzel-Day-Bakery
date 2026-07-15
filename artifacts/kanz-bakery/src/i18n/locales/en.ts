@@ -68,7 +68,7 @@ const en = {
       },
       community: {
         title: 'Community',
-        desc: "You're not a customer — you're a neighbor. We remember your order and ask about your day.",
+        desc: "You're not a customer — you're family. We remember your order and ask about your day.",
       },
       quality: {
         title: 'Quality',
