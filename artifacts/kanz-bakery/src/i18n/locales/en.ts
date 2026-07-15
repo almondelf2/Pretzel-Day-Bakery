@@ -237,6 +237,7 @@ const en = {
     about: 'About Us',
     placeOrder: 'Place Order',
     contact: 'Contact',
+    hours: 'Hours',
     address: '123 Baker Street',
     weekdays: 'Monday – Saturday: 7am – 7pm',
     sunday: 'Sunday: 8am – 5pm',

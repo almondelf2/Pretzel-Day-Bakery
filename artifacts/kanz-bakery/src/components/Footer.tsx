@@ -44,7 +44,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-serif font-semibold text-sm mb-3 text-foreground">{t('footer.contact')}</h3>
+            <h3 className="font-serif font-semibold text-sm mb-3 text-foreground">{t('footer.hours')}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>{t('footer.weekdays')}</li>
               <li>{t('footer.sunday')}</li>
