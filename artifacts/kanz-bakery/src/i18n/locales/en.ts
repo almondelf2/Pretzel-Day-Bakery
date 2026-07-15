@@ -107,7 +107,7 @@ const en = {
     },
     visit: {
       title: 'Visit Us Soon',
-      subtitle: "We're on Baker Street, just past the park. Come for the pretzel, stay for the warmth.",
+      subtitle: "Come for the pretzel, stay for the warmth.",
       address: '123 Baker Street',
       weekdays: 'Monday – Saturday: 7am – 7pm',
       sunday: 'Sunday: 8am – 5pm',
