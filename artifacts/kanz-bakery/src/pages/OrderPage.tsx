@@ -259,7 +259,7 @@ export default function OrderPage() {
                         <SelectTrigger className="flex-1" data-testid="select-menu-item">
                           <SelectValue placeholder={t('order.items.choosePlaceholder')} />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="max-h-72 overflow-y-auto">
                           {menuItems?.map((item) => (
                             <SelectItem key={item.id} value={item.id.toString()}>
                               {item.name} – ${item.price.toFixed(2)}
