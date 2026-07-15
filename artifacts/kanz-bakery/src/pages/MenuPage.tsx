@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'wouter';
+import { Link, useLocation, useSearch } from 'wouter';
 import { useListCategories, useListMenuItems } from '@workspace/api-client-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,26 +7,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Award } from 'lucide-react';
 
 export default function MenuPage() {
-  const [location] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1]);
-  const categoryParam = searchParams.get('category');
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(
-    categoryParam ? Number(categoryParam) : null
-  );
+  const [, navigate] = useLocation();
+  const search = useSearch();
+  const categoryParam = new URLSearchParams(search).get('category');
+  const selectedCategory = categoryParam ? Number(categoryParam) : null;
 
   const { data: categories, isLoading: loadingCategories } = useListCategories();
   const { data: menuItems, isLoading: loadingItems } = useListMenuItems(
     selectedCategory ? { categoryId: selectedCategory } : undefined
   );
 
-  useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(Number(categoryParam));
-    }
-  }, [categoryParam]);
-
   const handleCategoryChange = (categoryId: number | null) => {
-    setSelectedCategory(categoryId);
+    navigate(categoryId ? `/menu?category=${categoryId}` : '/menu');
   };
 
   return (
