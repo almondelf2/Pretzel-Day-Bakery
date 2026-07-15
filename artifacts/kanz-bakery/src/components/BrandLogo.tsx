@@ -5,37 +5,46 @@ import { useTranslation } from 'react-i18next';
 export function PretzelMark({ className = 'w-7 h-7' }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 64 64"
+      viewBox="0 0 100 100"
       className={className}
       fill="none"
       stroke="currentColor"
-      strokeWidth="7"
+      strokeWidth="12"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
     >
       {/*
-        Pretzel anatomy:
-        - Knot: two pairs of endpoints near the center
-            lower-left (26,36), lower-right (38,36)
-            upper-right (38,24), upper-left (26,24)
-        - Left arm: starts lower-left, loops around the left hole, arrives upper-right
-        - Right arm: starts lower-right, loops around the right hole, arrives upper-left
-          The arms cross each other at the knot (~32,30), which is the signature pretzel X.
-        - Bottom U: two half-curves from the knot base down to (32,58).
+        Three-path pretzel construction (100×100 viewBox):
+
+        Body junctions (top of the bottom oval):
+          Left = (28, 60)   Right = (72, 60)
+
+        Each arm starts at one body junction, loops around its hole,
+        then lands on the OPPOSITE side of the knot — that crossing is
+        the signature pretzel X, visible at ≈ (50, 30).
+
+        Knot endpoints:
+          Left arm ends  → right side of knot (62, 46)
+          Right arm ends → left  side of knot (38, 46)
+
+        Three holes created:
+          • Left hole  — enclosed by the left-arm loop
+          • Right hole — enclosed by the right-arm loop
+          • Middle hole — framed by the two arms above and the oval below
       */}
 
-      {/* Left arm — loops around left hole, crosses to the right */}
-      <path d="M26,36 C8,36 4,8 18,5 C28,4 40,16 38,24" />
+      {/* Bottom oval body */}
+      <path d="M28,60 C12,60 6,72 6,82 C6,92 24,97 50,97 C76,97 94,92 94,82 C94,72 88,60 72,60" />
 
-      {/* Right arm — loops around right hole, crosses to the left */}
-      <path d="M38,36 C56,36 60,8 46,5 C36,4 24,16 26,24" />
+      {/* Left arm — goes under at the knot crossing */}
+      <path d="M28,60 C14,58 6,48 6,34 C6,20 14,12 24,12 C34,12 46,22 62,46" />
 
-      {/* Bottom U — left half */}
-      <path d="M26,36 C12,40 8,54 32,58" />
+      {/* Crossing gap — white blocker so left arm reads as going under */}
+      <path d="M44,26 C46,28 50,31 56,34" stroke="white" strokeWidth="16" strokeLinecap="round" />
 
-      {/* Bottom U — right half */}
-      <path d="M38,36 C52,40 56,54 32,58" />
+      {/* Right arm — goes over at the knot crossing */}
+      <path d="M72,60 C86,58 94,48 94,34 C94,20 86,12 76,12 C66,12 54,22 38,46" />
     </svg>
   );
 }

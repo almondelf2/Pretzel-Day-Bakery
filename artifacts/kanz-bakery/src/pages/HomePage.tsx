@@ -53,9 +53,11 @@ export default function HomePage() {
               data-testid="img-hero"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 flex flex-col items-center justify-center gap-6">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/20 flex items-center justify-center">
-                  <BreadMark className="w-16 h-16 sm:w-20 sm:h-20 text-primary" />
-                </div>
+                <img
+                  src="/images/pretzel-watercolor.png"
+                  alt="Pretzel Day Bakery"
+                  className="w-48 h-48 sm:w-64 sm:h-64 object-contain drop-shadow-lg"
+                />
                 <div className="text-center space-y-1">
                   <p className="font-serif font-bold text-xl sm:text-2xl text-primary">{t('nav.brand')}</p>
                   <p className="text-xs sm:text-sm text-primary/70 tracking-widest uppercase">{t('home.hero.tagline')}</p>
