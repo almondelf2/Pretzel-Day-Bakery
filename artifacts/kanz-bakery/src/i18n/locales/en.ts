@@ -81,7 +81,7 @@ const en = {
     },
     team: {
       title: 'Meet the Bakers',
-      subtitle: 'The people behind your pretzel',
+      subtitle: 'The people behind your pretzel. Portraits by Pam.',
       members: [
         {
           name: 'William Buttlicker',
