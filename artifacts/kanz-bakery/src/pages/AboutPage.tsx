@@ -50,19 +50,11 @@ export default function AboutPage() {
             </div>
 
             <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl animate-in fade-in slide-in-from-right-4 duration-700 delay-150" data-testid="img-storefront">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 flex flex-col items-center justify-center gap-8">
-                <div className="grid grid-cols-3 gap-4 opacity-60">
-                  {['Sourdough', 'Croissants', 'Cakes', 'Cookies', 'Pies', 'Pastries'].map((label) => (
-                    <div key={label} className="w-20 h-20 rounded-xl bg-primary/20 flex items-center justify-center">
-                      <span className="text-xs font-medium text-primary/80 text-center px-1">{label}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="font-serif font-bold text-3xl text-primary">Est. 2009</p>
-                  <p className="text-sm text-primary/70 tracking-widest uppercase">A neighbourhood institution</p>
-                </div>
-              </div>
+              <img
+                src="/images/bakery-storefront.jpg"
+                alt="Inside Kanz Bakery"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -158,9 +150,9 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { name: 'Sarah Martinez', role: 'Head Baker & Founder', bio: 'Started Kanz with a sourdough starter and a dream. Still wakes at 4am every day.' },
-              { name: 'James Chen', role: 'Pastry Chef', bio: 'Trained in Paris, returned home to make croissants that rival the Seine.' },
-              { name: 'Maya Thompson', role: 'Cake Designer', bio: 'Turns celebrations into edible art. Every cake tells a story.' },
+              { name: 'Sarah Martinez', role: 'Head Baker & Founder', bio: 'Started Kanz with a sourdough starter and a dream. Still wakes at 4am every day.', img: '/images/team/sarah-martinez.jpg' },
+              { name: 'James Chen', role: 'Pastry Chef', bio: 'Trained in Paris, returned home to make croissants that rival the Seine.', img: '/images/team/james-chen.jpg' },
+              { name: 'Maya Thompson', role: 'Cake Designer', bio: 'Turns celebrations into edible art. Every cake tells a story.', img: '/images/team/maya-thompson.jpg' },
             ].map((member, index) => (
               <Card 
                 key={member.name}
@@ -168,10 +160,12 @@ export default function AboutPage() {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6 space-y-4 text-center">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto flex items-center justify-center">
-                    <span className="font-serif font-bold text-2xl text-primary">
-                      {member.name.split(' ').map(n => n[0]).join('')}
-                    </span>
+                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto ring-2 ring-primary/20">
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div>
                     <h3 className="font-serif font-semibold text-lg text-foreground">
