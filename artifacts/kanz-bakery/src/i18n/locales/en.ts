@@ -90,13 +90,13 @@ const en = {
         },
         {
           name: 'Stanley "The Manly" Hudson',
-          role: 'Baker',
-          bio: 'Quiet. Efficient. Makes the best jalapeño cheddar pretzel in the region. Will not discuss crossword puzzles during business hours.',
+          role: 'Sweet Baker',
+          bio: 'Quiet. Efficient. Responsible for every sweet pretzel on the menu. Crossword puzzles are a separate matter.',
         },
         {
           name: 'Pamela "Pamcake" Beesly',
-          role: 'Baker',
-          bio: 'Joined the team for the love of baking. Responsible for the cinnamon sugar pretzel recipe and all in-store watercolor signage.',
+          role: 'Savory Baker',
+          bio: 'Runs the savory side with precision and a light hand. Also responsible for all in-store watercolor signage.',
         },
       ],
     },
