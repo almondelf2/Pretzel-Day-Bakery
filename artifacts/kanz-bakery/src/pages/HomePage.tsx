@@ -204,7 +204,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {menuSummary.categories.map((category, index) => (
-                <Link key={category.id} href={`/menu?category=${category.id}`}>
+                <Link key={category.id} href={`/menu?category=${category.id}`} className="block h-full">
                   <Card
                     className="group cursor-pointer hover:shadow-lg hover:border-primary/50 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 h-full"
                     style={{ animationDelay: `${index * 75}ms` }}
