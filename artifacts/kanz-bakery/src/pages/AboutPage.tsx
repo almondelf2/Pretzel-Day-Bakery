@@ -53,7 +53,7 @@ export default function AboutPage() {
               data-testid="img-storefront"
             >
               <img
-                src="/images/bakery-storefront.jpg"
+                src="/images/pretzel-bakery-interior.jpg"
                 alt={t('about.story.imgAlt')}
                 className="w-full h-full object-cover"
               />
