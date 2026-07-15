@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { StarRating } from '@/components/StarRating';
 import { ChevronRight, Clock, Users, Award } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BreadMark } from '@/components/BrandLogo';
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -53,12 +54,7 @@ export default function HomePage() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 flex flex-col items-center justify-center gap-6">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/20 flex items-center justify-center">
-                  <svg viewBox="0 0 64 64" className="w-16 h-16 sm:w-20 sm:h-20 text-primary" fill="currentColor">
-                    <ellipse cx="32" cy="40" rx="24" ry="12" opacity="0.3" />
-                    <path d="M10 36 Q12 20 32 18 Q52 20 54 36 Q52 44 32 46 Q12 44 10 36Z" />
-                    <path d="M18 28 Q20 18 32 16 Q44 18 46 28" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.6" />
-                    <path d="M22 24 Q24 15 32 14 Q40 15 42 24" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.4" />
-                  </svg>
+                  <BreadMark className="w-16 h-16 sm:w-20 sm:h-20 text-primary" />
                 </div>
                 <div className="text-center space-y-1">
                   <p className="font-serif font-bold text-xl sm:text-2xl text-primary">{t('nav.brand')}</p>

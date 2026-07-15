@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
-import { ShoppingBag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { BrandLogo } from '@/components/BrandLogo';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -12,12 +12,9 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="sm:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity" data-testid="link-footer-home">
-              <ShoppingBag className="w-6 h-6 text-primary" strokeWidth={2.5} />
-              <span className="font-serif font-bold text-xl tracking-tight text-foreground">
-                {t('nav.brand')}
-              </span>
-            </Link>
+            <div className="mb-4">
+              <BrandLogo />
+            </div>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
               {t('footer.tagline')}
             </p>

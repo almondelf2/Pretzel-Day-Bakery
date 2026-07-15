@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'wouter';
-import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import { BrandLogo } from '@/components/BrandLogo';
 
 const LANGS = [
   { code: 'en', label: 'EN' },
@@ -40,12 +41,7 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0" data-testid="link-home">
-            <ShoppingBag className="w-6 h-6 text-primary" strokeWidth={2.5} />
-            <span className="font-serif font-bold text-xl tracking-tight text-foreground">
-              {t('nav.brand')}
-            </span>
-          </Link>
+          <BrandLogo />
 
           {/* Desktop Navigation + Language switcher */}
           <div className="hidden md:flex items-center gap-1">
