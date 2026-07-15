@@ -247,7 +247,7 @@ const en = {
     badge: 'Scranton Locations',
     hero: {
       title: 'Find Us',
-      subtitle: 'Three locations across Scranton — always a fresh pretzel nearby.',
+      subtitle: 'Started in a cart, now three locations across Scranton — always a fresh pretzel nearby.',
     },
     selected: 'Viewing',
     getDirections: 'Get Directions',
