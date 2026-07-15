@@ -243,34 +243,34 @@ const en = {
     copyright: '© {{year}} Pretzel Day Bakery. All rights reserved.',
   },
   findUs: {
-    badge: 'Riyadh Locations',
+    badge: 'Scranton Locations',
     hero: {
       title: 'Find Us',
-      subtitle: 'Three branches across Riyadh — always a fresh pretzel nearby.',
+      subtitle: 'Three locations across Scranton — always a fresh pretzel nearby.',
     },
     selected: 'Viewing',
     getDirections: 'Get Directions',
     hours: {
-      weekdays: 'Sat – Thu',
+      weekdays: 'Mon – Fri',
       satThu: '7am – 9pm',
-      friday: 'Friday',
-      friHours: '2pm – 10pm',
+      friday: 'Sat – Sun',
+      friHours: '8am – 6pm',
     },
     branches: {
-      olaya: {
-        name: 'Al Olaya Branch',
-        neighborhood: 'Al Olaya',
-        address: 'King Fahd Road, Al Olaya District, Riyadh',
+      'scranton-business-park': {
+        name: 'Scranton Business Park',
+        neighborhood: 'Slough Avenue',
+        address: '1725 Slough Ave, Suite 200, Scranton Business Park',
       },
-      nakheel: {
-        name: 'Al Nakheel Branch',
-        neighborhood: 'Al Nakheel',
-        address: 'Prince Mohammed bin Salman Rd, Al Nakheel, Riyadh',
+      'steamtown-mall': {
+        name: 'Steamtown Mall',
+        neighborhood: 'Downtown Scranton',
+        address: 'Steamtown Mall, Scranton, PA 18503',
       },
-      malaz: {
-        name: 'Al Malaz Branch',
-        neighborhood: 'Al Malaz',
-        address: 'King Abdullah Road, Al Malaz District, Riyadh',
+      alfredos: {
+        name: "Alfredo's Pizza Cafe",
+        neighborhood: 'Scranton',
+        address: "Alfredo's Pizza Cafe, Scranton, PA",
       },
     },
   },

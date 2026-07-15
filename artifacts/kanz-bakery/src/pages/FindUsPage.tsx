@@ -8,32 +8,32 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 // ---------------------------------------------------------------------------
-// Branch data — static, coords are accurate Riyadh neighbourhoods
+// Branch data — Scranton, PA locations
 // ---------------------------------------------------------------------------
 export const BRANCHES = [
   {
-    id: 'olaya',
-    coords: [24.6918, 46.6829] as [number, number],
-    phone: '+966 11 234 5678',
-    mapsUrl: 'https://maps.google.com/?q=24.6918,46.6829',
+    id: 'scranton-business-park',
+    coords: [41.4090, -75.6541] as [number, number],
+    phone: '+1 (570) 555-0100',
+    mapsUrl: 'https://maps.google.com/?q=1725+Slough+Ave+Scranton+PA',
   },
   {
-    id: 'nakheel',
-    coords: [24.7561, 46.6318] as [number, number],
-    phone: '+966 11 345 6789',
-    mapsUrl: 'https://maps.google.com/?q=24.7561,46.6318',
+    id: 'steamtown-mall',
+    coords: [41.4082, -75.6624] as [number, number],
+    phone: '+1 (570) 555-0182',
+    mapsUrl: 'https://maps.google.com/?q=Steamtown+Mall+Scranton+PA',
   },
   {
-    id: 'malaz',
-    coords: [24.6737, 46.7247] as [number, number],
-    phone: '+966 11 456 7890',
-    mapsUrl: 'https://maps.google.com/?q=24.6737,46.7247',
+    id: 'alfredos',
+    coords: [41.4108, -75.6512] as [number, number],
+    phone: '+1 (570) 555-0147',
+    mapsUrl: 'https://maps.google.com/?q=Alfredo\'s+Pizza+Cafe+Scranton+PA',
   },
 ] as const;
 
 // Centre of the three branches — used for initial map viewport
-const MAP_CENTER: [number, number] = [24.7055, 46.6798];
-const MAP_ZOOM = 11;
+const MAP_CENTER: [number, number] = [41.4093, -75.6559];
+const MAP_ZOOM = 14;
 
 // ---------------------------------------------------------------------------
 // Custom amber pin SVG as a DivIcon
