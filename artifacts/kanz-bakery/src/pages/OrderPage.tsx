@@ -10,19 +10,13 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar, MapPin, Users, Plus, Minus, Trash2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { OrderItem } from '@workspace/api-client-react/generated/api.schemas';
-
-interface OrderItemWithDetails extends OrderItem {
-  name?: string;
-  price?: number;
-}
 
 export default function OrderPage() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const createOrderMutation = useCreateOrder();
   const { data: menuItems } = useListMenuItems();
-  const { items: cartItems, clearCart } = useCart();
+  const { items: cartItems, addItem, removeItem, updateQuantity, updateNotes, clearCart } = useCart();
 
   const [orderType, setOrderType] = useState<OrderInputType>('bulk');
   const [customerName, setCustomerName] = useState('');
@@ -32,56 +26,23 @@ export default function OrderPage() {
   const [eventLocation, setEventLocation] = useState('');
   const [guestCount, setGuestCount] = useState('');
   const [notes, setNotes] = useState('');
-  const [items, setItems] = useState<OrderItemWithDetails[]>(() =>
-    cartItems.map(ci => ({
-      menuItemId: ci.id,
-      quantity: ci.quantity,
-      notes: null,
-      name: ci.name,
-      price: ci.price,
-    }))
-  );
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>('');
 
+  // Add item from the dropdown — delegates to cart so badge updates immediately
   const handleAddItem = () => {
     if (!selectedMenuItem) return;
     const menuItem = menuItems?.find(item => item.id === Number(selectedMenuItem));
     if (!menuItem) return;
-    const existingIndex = items.findIndex(item => item.menuItemId === menuItem.id);
-    if (existingIndex >= 0) {
-      const updated = [...items];
-      updated[existingIndex].quantity += 1;
-      setItems(updated);
-    } else {
-      setItems([...items, { menuItemId: menuItem.id, quantity: 1, notes: null, name: menuItem.name, price: menuItem.price }]);
-    }
+    addItem({ id: menuItem.id, name: menuItem.name, price: menuItem.price });
     setSelectedMenuItem('');
   };
 
-  const handleUpdateQuantity = (menuItemId: number, delta: number) => {
-    setItems(items.map(item =>
-      item.menuItemId === menuItemId
-        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-        : item
-    ));
-  };
-
-  const handleRemoveItem = (menuItemId: number) => {
-    setItems(items.filter(item => item.menuItemId !== menuItemId));
-  };
-
-  const handleUpdateItemNotes = (menuItemId: number, n: string) => {
-    setItems(items.map(item =>
-      item.menuItemId === menuItemId ? { ...item, notes: n || null } : item
-    ));
-  };
-
   const calculateTotal = () =>
-    items.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
+    cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (items.length === 0) {
+    if (cartItems.length === 0) {
       toast({ title: t('order.toast.noItemsTitle'), description: t('order.toast.noItemsDesc'), variant: 'destructive' });
       return;
     }
@@ -94,7 +55,11 @@ export default function OrderPage() {
       eventLocation: eventLocation.trim() || null,
       guestCount: guestCount ? Number(guestCount) : null,
       notes: notes.trim() || null,
-      items: items.map(({ menuItemId, quantity, notes }) => ({ menuItemId, quantity, notes })),
+      items: cartItems.map(({ id, quantity, notes }) => ({
+        menuItemId: id,
+        quantity,
+        notes: notes ?? null,
+      })),
     };
     createOrderMutation.mutate(
       { data: orderData },
@@ -103,7 +68,7 @@ export default function OrderPage() {
           toast({ title: t('order.toast.successTitle'), description: t('order.toast.successDesc') });
           clearCart();
           setCustomerName(''); setEmail(''); setPhone(''); setEventDate('');
-          setEventLocation(''); setGuestCount(''); setNotes(''); setItems([]);
+          setEventLocation(''); setGuestCount(''); setNotes('');
         },
         onError: (error: any) => {
           toast({ title: t('order.toast.errorTitle'), description: error?.message || t('order.toast.errorDesc'), variant: 'destructive' });
@@ -308,27 +273,27 @@ export default function OrderPage() {
                       </Button>
                     </div>
 
-                    {items.length > 0 && (
+                    {cartItems.length > 0 && (
                       <div className="space-y-3 pt-4 border-t border-border">
-                        {items.map((item) => (
+                        {cartItems.map((item) => (
                           <div
-                            key={item.menuItemId}
+                            key={item.id}
                             className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
-                            data-testid={`order-item-${item.menuItemId}`}
+                            data-testid={`order-item-${item.id}`}
                           >
                             <div className="flex-1 space-y-2 min-w-0">
                               <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0">
                                   <p className="font-medium text-foreground text-sm sm:text-base truncate">{item.name}</p>
                                   <p className="text-xs sm:text-sm text-muted-foreground">
-                                    ${item.price?.toFixed(2)} {t('order.items.each')}
+                                    ${item.price.toFixed(2)} {t('order.items.each')}
                                   </p>
                                 </div>
                                 <button
                                   type="button"
-                                  onClick={() => handleRemoveItem(item.menuItemId)}
+                                  onClick={() => removeItem(item.id)}
                                   className="text-muted-foreground hover:text-destructive transition-colors shrink-0"
-                                  data-testid={`button-remove-${item.menuItemId}`}
+                                  data-testid={`button-remove-${item.id}`}
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </button>
@@ -337,8 +302,8 @@ export default function OrderPage() {
                                 <Button
                                   type="button" variant="outline" size="icon"
                                   className="h-8 w-8 shrink-0"
-                                  onClick={() => handleUpdateQuantity(item.menuItemId, -1)}
-                                  data-testid={`button-decrease-${item.menuItemId}`}
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  data-testid={`button-decrease-${item.id}`}
                                 >
                                   <Minus className="w-3 h-3" />
                                 </Button>
@@ -346,8 +311,8 @@ export default function OrderPage() {
                                 <Button
                                   type="button" variant="outline" size="icon"
                                   className="h-8 w-8 shrink-0"
-                                  onClick={() => handleUpdateQuantity(item.menuItemId, 1)}
-                                  data-testid={`button-increase-${item.menuItemId}`}
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  data-testid={`button-increase-${item.id}`}
                                 >
                                   <Plus className="w-3 h-3" />
                                 </Button>
@@ -355,9 +320,9 @@ export default function OrderPage() {
                               <Input
                                 placeholder={t('order.items.specialInstructions')}
                                 value={item.notes || ''}
-                                onChange={(e) => handleUpdateItemNotes(item.menuItemId, e.target.value)}
+                                onChange={(e) => updateNotes(item.id, e.target.value || null)}
                                 className="text-sm"
-                                data-testid={`input-item-notes-${item.menuItemId}`}
+                                data-testid={`input-item-notes-${item.id}`}
                               />
                             </div>
                           </div>
@@ -384,12 +349,12 @@ export default function OrderPage() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">{t('order.summary.items')}:</span>
-                        <span className="font-medium">{items.length}</span>
+                        <span className="font-medium">{cartItems.length}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">{t('order.summary.totalQty')}:</span>
                         <span className="font-medium">
-                          {items.reduce((sum, item) => sum + item.quantity, 0)}
+                          {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
                         </span>
                       </div>
                     </div>
@@ -408,7 +373,7 @@ export default function OrderPage() {
                       type="submit"
                       className="w-full"
                       size="lg"
-                      disabled={createOrderMutation.isPending || items.length === 0}
+                      disabled={createOrderMutation.isPending || cartItems.length === 0}
                       data-testid="button-submit-order"
                     >
                       {createOrderMutation.isPending ? t('order.summary.submitting') : t('order.summary.submit')}
