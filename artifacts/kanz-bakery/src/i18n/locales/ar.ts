@@ -4,6 +4,7 @@ const ar = {
     about: 'من نحن',
     menu: 'القائمة',
     order: 'اطلب الآن',
+    findUs: 'فروعنا',
     brand: 'مخبز كنز',
   },
   home: {
@@ -235,6 +236,38 @@ const ar = {
     weekdays: 'الاثنين – السبت: ٧ص – ٧م',
     sunday: 'الأحد: ٨ص – ٥م',
     copyright: '© {{year}} مخبز كنز. جميع الحقوق محفوظة.',
+  },
+  findUs: {
+    badge: 'فروعنا في الرياض',
+    hero: {
+      title: 'فروعنا',
+      subtitle: 'ثلاثة فروع في أرجاء الرياض — دائماً رغيف طازج في متناولك.',
+    },
+    selected: 'معروض',
+    getDirections: 'احصل على الاتجاهات',
+    hours: {
+      weekdays: 'السبت – الخميس',
+      satThu: '٧ص – ٩م',
+      friday: 'الجمعة',
+      friHours: '٢م – ١٠م',
+    },
+    branches: {
+      olaya: {
+        name: 'فرع العليا',
+        neighborhood: 'العليا',
+        address: 'طريق الملك فهد، حي العليا، الرياض',
+      },
+      nakheel: {
+        name: 'فرع النخيل',
+        neighborhood: 'النخيل',
+        address: 'طريق الأمير محمد بن سلمان، حي النخيل، الرياض',
+      },
+      malaz: {
+        name: 'فرع الملز',
+        neighborhood: 'الملز',
+        address: 'طريق الملك عبدالله، حي الملز، الرياض',
+      },
+    },
   },
   lang: {
     switchLabel: 'اللغة',

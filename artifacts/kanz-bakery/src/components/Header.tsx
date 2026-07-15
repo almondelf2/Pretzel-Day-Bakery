@@ -22,6 +22,7 @@ export function Header() {
     { href: '/about', label: t('nav.about') },
     { href: '/menu', label: t('nav.menu') },
     { href: '/order', label: t('nav.order') },
+    { href: '/find-us', label: t('nav.findUs') },
   ];
 
   const isActive = (href: string) => {

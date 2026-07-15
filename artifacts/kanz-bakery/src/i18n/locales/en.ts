@@ -4,6 +4,7 @@ const en = {
     about: 'About',
     menu: 'Menu',
     order: 'Order',
+    findUs: 'Find Us',
     brand: 'Kanz Bakery',
   },
   home: {
@@ -235,6 +236,38 @@ const en = {
     weekdays: 'Monday – Saturday: 7am – 7pm',
     sunday: 'Sunday: 8am – 5pm',
     copyright: '© {{year}} Kanz Bakery. All rights reserved.',
+  },
+  findUs: {
+    badge: 'Riyadh Locations',
+    hero: {
+      title: 'Find Us',
+      subtitle: 'Three branches across Riyadh — always a fresh loaf nearby.',
+    },
+    selected: 'Viewing',
+    getDirections: 'Get Directions',
+    hours: {
+      weekdays: 'Sat – Thu',
+      satThu: '7am – 9pm',
+      friday: 'Friday',
+      friHours: '2pm – 10pm',
+    },
+    branches: {
+      olaya: {
+        name: 'Al Olaya Branch',
+        neighborhood: 'Al Olaya',
+        address: 'King Fahd Road, Al Olaya District, Riyadh',
+      },
+      nakheel: {
+        name: 'Al Nakheel Branch',
+        neighborhood: 'Al Nakheel',
+        address: 'Prince Mohammed bin Salman Rd, Al Nakheel, Riyadh',
+      },
+      malaz: {
+        name: 'Al Malaz Branch',
+        neighborhood: 'Al Malaz',
+        address: 'King Abdullah Road, Al Malaz District, Riyadh',
+      },
+    },
   },
   lang: {
     switchLabel: 'Language',

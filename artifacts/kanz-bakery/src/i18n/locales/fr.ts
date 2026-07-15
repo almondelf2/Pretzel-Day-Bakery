@@ -4,6 +4,7 @@ const fr = {
     about: "À propos",
     menu: "Menu",
     order: "Commander",
+    findUs: "Nous trouver",
     brand: "Kanz Bakery",
   },
   home: {
@@ -235,6 +236,38 @@ const fr = {
     weekdays: "Lundi \u2013 Samedi\u00a0: 7h \u2013 19h",
     sunday: "Dimanche\u00a0: 8h \u2013 17h",
     copyright: "\u00a9 {{year}} Kanz Bakery. Tous droits r\u00e9serv\u00e9s.",
+  },
+  findUs: {
+    badge: "Emplacements \u00e0 Riyad",
+    hero: {
+      title: "Nous trouver",
+      subtitle: "Trois adresses \u00e0 Riyad \u2014 toujours un pain frais \u00e0 port\u00e9e.",
+    },
+    selected: "S\u00e9lectionn\u00e9",
+    getDirections: "Itin\u00e9raire",
+    hours: {
+      weekdays: "Sam \u2013 Jeu",
+      satThu: "7h \u2013 21h",
+      friday: "Vendredi",
+      friHours: "14h \u2013 22h",
+    },
+    branches: {
+      olaya: {
+        name: "Agence Al Olaya",
+        neighborhood: "Al Olaya",
+        address: "Route du roi Fahd, quartier Al Olaya, Riyad",
+      },
+      nakheel: {
+        name: "Agence Al Nakheel",
+        neighborhood: "Al Nakheel",
+        address: "Av. prince Mohammed bin Salman, Al Nakheel, Riyad",
+      },
+      malaz: {
+        name: "Agence Al Malaz",
+        neighborhood: "Al Malaz",
+        address: "Route du roi Abdallah, quartier Al Malaz, Riyad",
+      },
+    },
   },
   lang: {
     switchLabel: "Langue",

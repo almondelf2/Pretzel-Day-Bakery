@@ -12,6 +12,7 @@ import AboutPage from '@/pages/AboutPage';
 import MenuPage from '@/pages/MenuPage';
 import MenuItemDetailPage from '@/pages/MenuItemDetailPage';
 import OrderPage from '@/pages/OrderPage';
+import FindUsPage from '@/pages/FindUsPage';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ function Router() {
           <Route path="/menu" component={MenuPage} />
           <Route path="/menu/:id" component={MenuItemDetailPage} />
           <Route path="/order" component={OrderPage} />
+          <Route path="/find-us" component={FindUsPage} />
           <Route component={NotFound} />
         </Switch>
       </main>
