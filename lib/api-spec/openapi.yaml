@@ -3,20 +3,27 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Kanz Bakery API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: categories
+    description: Menu categories
+  - name: menu
+    description: Menu items
+  - name: ratings
+    description: Item ratings
+  - name: orders
+    description: Bulk/catering orders
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +31,195 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [categories]
+      summary: List all menu categories
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /menu-items:
+    get:
+      operationId: listMenuItems
+      tags: [menu]
+      summary: List all menu items
+      parameters:
+        - name: categoryId
+          in: query
+          required: false
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+
+  /menu-items/featured:
+    get:
+      operationId: getFeaturedMenuItems
+      tags: [menu]
+      summary: Get featured/popular menu items
+      responses:
+        "200":
+          description: Featured items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+
+  /menu-items/{id}:
+    get:
+      operationId: getMenuItem
+      tags: [menu]
+      summary: Get a single menu item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Menu item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /menu-items/{id}/ratings:
+    get:
+      operationId: getMenuItemRatings
+      tags: [ratings]
+      summary: Get ratings for a menu item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Ratings list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Rating"
+
+  /menu-summary:
+    get:
+      operationId: getMenuSummary
+      tags: [menu]
+      summary: Get menu grouped by category with item counts
+      responses:
+        "200":
+          description: Menu summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuSummary"
+
+  /ratings:
+    post:
+      operationId: createRating
+      tags: [ratings]
+      summary: Submit a rating for a menu item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RatingInput"
+      responses:
+        "201":
+          description: Rating created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rating"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ratings/stats:
+    get:
+      operationId: getRatingsStats
+      tags: [ratings]
+      summary: Get average ratings per menu item
+      responses:
+        "200":
+          description: Ratings statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RatingStat"
+
+  /orders:
+    get:
+      operationId: listOrders
+      tags: [orders]
+      summary: List all orders
+      responses:
+        "200":
+          description: Orders list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Schedule a bulk or catering order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +230,237 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        displayOrder:
+          type: integer
+      required:
+        - id
+        - name
+        - displayOrder
+
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: number
+        imageUrl:
+          type: ["string", "null"]
+        available:
+          type: boolean
+        featured:
+          type: boolean
+        categoryId:
+          type: integer
+        categoryName:
+          type: string
+        averageRating:
+          type: ["number", "null"]
+        ratingCount:
+          type: integer
+      required:
+        - id
+        - name
+        - price
+        - available
+        - featured
+        - categoryId
+        - categoryName
+        - ratingCount
+
+    Rating:
+      type: object
+      properties:
+        id:
+          type: integer
+        menuItemId:
+          type: integer
+        rating:
+          type: integer
+        comment:
+          type: ["string", "null"]
+        customerName:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - menuItemId
+        - rating
+        - customerName
+        - createdAt
+
+    RatingInput:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+        customerName:
+          type: string
+      required:
+        - menuItemId
+        - rating
+        - customerName
+
+    RatingStat:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        menuItemName:
+          type: string
+        averageRating:
+          type: number
+        ratingCount:
+          type: integer
+      required:
+        - menuItemId
+        - menuItemName
+        - averageRating
+        - ratingCount
+
+    MenuSummary:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategorySummary"
+      required:
+        - totalItems
+        - categories
+
+    CategorySummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        itemCount:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MenuItem"
+      required:
+        - id
+        - name
+        - itemCount
+        - items
+
+    OrderItem:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        quantity:
+          type: integer
+        notes:
+          type: ["string", "null"]
+      required:
+        - menuItemId
+        - quantity
+
+    OrderInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [bulk, catering]
+        customerName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        eventDate:
+          type: string
+        eventLocation:
+          type: ["string", "null"]
+        guestCount:
+          type: ["integer", "null"]
+        notes:
+          type: ["string", "null"]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+      required:
+        - type
+        - customerName
+        - email
+        - phone
+        - eventDate
+        - items
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [bulk, catering]
+        customerName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        eventDate:
+          type: string
+        eventLocation:
+          type: ["string", "null"]
+        guestCount:
+          type: ["integer", "null"]
+        notes:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [pending, confirmed, completed, cancelled]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        createdAt:
+          type: string
+      required:
+        - id
+        - type
+        - customerName
+        - email
+        - phone
+        - eventDate
+        - status
+        - items
+        - createdAt
