@@ -15,7 +15,7 @@ const en = {
         'Every pretzel hand-twisted, lye-dipped, and baked to perfection. Sweet, savory, or classic — there\'s a pretzel for every mood.',
       viewMenu: 'View Menu',
       placeOrder: 'Place an Order',
-      tagline: 'Every day is pretzel day since 2009',
+      tagline: 'Every day is pretzel day since 2005',
     },
     stats: {
       hours: '7am – 7pm',
@@ -53,7 +53,7 @@ const en = {
     },
     story: {
       title: 'Every Day is Pretzel Day',
-      p1: "Pretzel Day Bakery was born on a single, magical afternoon in 2009 when William Buttlicker walked into a regional baking competition with a hand-twisted soft pretzel and walked out with a trophy and a calling.",
+      p1: "Pretzel Day Bakery was born on a single, magical afternoon in 2005 when William Buttlicker walked into a regional baking competition with a hand-twisted soft pretzel and walked out with a trophy and a calling.",
       p2: "We open before sunrise, shaping and dipping each pretzel by hand. By the time the doors open, the salt is crusted just right, the dough is chewy in the center, and the whole block smells incredible.",
       p3: "What started as a one-man operation now has a small but legendary crew. Stanley keeps the rhythm. Pam keeps it beautiful. William keeps reminding everyone that his name is pronounced exactly how it looks.",
       p4: "We don't cut corners. We don't use frozen dough. We don't let a single pretzel leave without meeting our standards. Because every customer deserves their own Pretzel Day.",
