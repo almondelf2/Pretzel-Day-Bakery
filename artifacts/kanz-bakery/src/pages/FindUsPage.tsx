@@ -109,12 +109,12 @@ export default function FindUsPage() {
       {/* Content */}
       <section className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          <div className="flex flex-col md:flex-row gap-5">
 
-            {/* Map — left on desktop, top on mobile */}
-            <div className="flex-1 min-h-[360px] lg:min-h-0 order-first">
-              <div className="lg:sticky lg:top-24 rounded-2xl overflow-hidden border border-border shadow-md"
-                   style={{ height: 'min(600px, 70dvh)' }}>
+            {/* Map — left column */}
+            <div className="flex-1 min-h-[340px] md:min-h-0">
+              <div className="md:sticky md:top-24 rounded-2xl overflow-hidden border border-border shadow-md"
+                   style={{ height: 'min(580px, 68dvh)' }}>
                 <MapContainer
                   center={MAP_CENTER}
                   zoom={MAP_ZOOM}
@@ -156,8 +156,8 @@ export default function FindUsPage() {
               </div>
             </div>
 
-            {/* Branch list — right on desktop, bottom on mobile */}
-            <div className="lg:w-[380px] shrink-0 space-y-4">
+            {/* Branch list — right column */}
+            <div className="md:w-[300px] shrink-0 space-y-3">
               {BRANCHES.map((branch, i) => {
                 const isSelected = branch.id === selected;
                 return (
