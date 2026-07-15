@@ -20,9 +20,9 @@ export function Header() {
   const navLinks = [
     { href: '/', label: t('nav.home') },
     { href: '/about', label: t('nav.about') },
+    { href: '/find-us', label: t('nav.findUs') },
     { href: '/menu', label: t('nav.menu') },
     { href: '/order', label: t('nav.order') },
-    { href: '/find-us', label: t('nav.findUs') },
   ];
 
   const isActive = (href: string) => {
