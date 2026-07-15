@@ -5,7 +5,7 @@ const fr = {
     menu: "Menu",
     order: "Commander",
     findUs: "Nous trouver",
-    brand: "Kanz Bakery",
+    brand: "Pretzel Day Bakery",
   },
   home: {
     hero: {

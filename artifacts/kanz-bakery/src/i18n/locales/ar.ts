@@ -5,7 +5,7 @@ const ar = {
     menu: 'القائمة',
     order: 'اطلب الآن',
     findUs: 'فروعنا',
-    brand: 'مخبز كنز',
+    brand: 'مخبز بريتزل داي',
   },
   home: {
     hero: {

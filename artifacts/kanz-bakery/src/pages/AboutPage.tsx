@@ -14,11 +14,7 @@ export default function AboutPage() {
     bio: string;
   }>;
 
-  const teamImages = [
-    '/images/team/sarah-martinez.jpg',
-    '/images/team/james-chen.jpg',
-    '/images/team/maya-thompson.jpg',
-  ];
+  const teamInitials = ['WB', 'SH', 'PB'];
 
   return (
     <div className="min-h-[100dvh] flex flex-col">
@@ -125,12 +121,10 @@ export default function AboutPage() {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6 space-y-4 text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden mx-auto ring-2 ring-primary/20">
-                    <img
-                      src={teamImages[index]}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-primary/15 flex items-center justify-center mx-auto ring-2 ring-primary/20">
+                    <span className="font-serif font-bold text-xl sm:text-2xl text-primary select-none">
+                      {teamInitials[index]}
+                    </span>
                   </div>
                   <div>
                     <h3 className="font-serif font-semibold text-base sm:text-lg text-foreground">

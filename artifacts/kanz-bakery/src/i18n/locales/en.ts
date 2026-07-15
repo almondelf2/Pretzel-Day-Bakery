@@ -5,17 +5,17 @@ const en = {
     menu: 'Menu',
     order: 'Order',
     findUs: 'Find Us',
-    brand: 'Kanz Bakery',
+    brand: 'Pretzel Day Bakery',
   },
   home: {
     hero: {
-      badge: 'Award-Winning Bakery',
-      title: 'Baked Fresh,\nServed Warm',
+      badge: 'Award-Winning Pretzels',
+      title: 'Go Ahead,\nBake My Day.',
       subtitle:
-        'Every loaf, every pastry, every cake is handcrafted with care. Start your morning with the smell of fresh bread and the warmth of home.',
+        'Every pretzel hand-twisted, lye-dipped, and baked to perfection. Sweet, savory, or classic — there\'s a pretzel for every mood.',
       viewMenu: 'View Menu',
       placeOrder: 'Place an Order',
-      tagline: 'Baked with love since 2009',
+      tagline: 'Every day is pretzel day since 2009',
     },
     stats: {
       hours: '7am – 7pm',
@@ -27,7 +27,7 @@ const en = {
     },
     featured: {
       title: 'Customer Favorites',
-      subtitle: "The treats our neighbors can't get enough of",
+      subtitle: "The pretzels our neighbors can't get enough of",
       browseMenu: 'Browse Full Menu',
       noItems: 'No featured items available',
       badge: 'Featured',
@@ -41,7 +41,7 @@ const en = {
     cta: {
       title: 'Planning an Event?',
       subtitle:
-        'From intimate gatherings to grand celebrations, we craft custom cakes and catering that make every moment memorable.',
+        'From office parties to grand celebrations, we craft custom pretzel spreads and catering that make every moment unforgettable.',
       button: 'Schedule Your Order',
     },
   },
@@ -49,22 +49,22 @@ const en = {
     hero: {
       title: 'Our Story',
       subtitle:
-        'A neighborhood bakery built on tradition, warmth, and the simple joy of breaking bread together.',
+        'A neighborhood pretzel bakery built on tradition, a secret lye-dip recipe, and the firm belief that every day should be Pretzel Day.',
     },
     story: {
-      title: 'Fifteen Years of Fresh Starts',
-      p1: "Kanz Bakery opened its doors in 2009 with a simple promise: to bake bread the way your grandmother did — slowly, carefully, with hands that care.",
-      p2: "We wake before sunrise to shape dough that's been rising overnight. By the time you walk through our doors, the croissants are still warm, the sourdough is crackling, and the air smells like butter and possibility.",
-      p3: "What started as a two-person operation has grown into a beloved neighborhood fixture. But we've kept what matters: every loaf is still shaped by hand, every cake is still custom, and every customer is still greeted by name.",
-      p4: "We don't use shortcuts. We don't rush fermentation. We don't compromise on ingredients. Because good bread takes time, and you're worth it.",
-      imgAlt: 'Inside Kanz Bakery',
+      title: 'Every Day is Pretzel Day',
+      p1: "Pretzel Day Bakery was born on a single, magical afternoon in 2009 when William Buttlicker walked into a regional baking competition with a hand-twisted soft pretzel and walked out with a trophy and a calling.",
+      p2: "We open before sunrise, shaping and dipping each pretzel by hand. By the time the doors open, the salt is crusted just right, the dough is chewy in the center, and the whole block smells incredible.",
+      p3: "What started as a one-man operation now has a small but legendary crew. Stanley keeps the rhythm. Pam keeps it beautiful. William keeps reminding everyone that his name is pronounced exactly how it looks.",
+      p4: "We don't cut corners. We don't use frozen dough. We don't let a single pretzel leave without meeting our standards. Because every customer deserves their own Pretzel Day.",
+      imgAlt: 'Inside Pretzel Day Bakery',
     },
     values: {
       title: 'What We Believe',
-      subtitle: 'The values that shape every loaf we bake',
+      subtitle: 'The values that shape every pretzel we twist',
       handcrafted: {
         title: 'Handcrafted',
-        desc: 'Every pastry is shaped by skilled hands, not machines. We believe in the human touch.',
+        desc: 'Every pretzel is hand-twisted, never machine-made. The shape matters as much as the taste.',
       },
       community: {
         title: 'Community',
@@ -72,37 +72,37 @@ const en = {
       },
       quality: {
         title: 'Quality',
-        desc: 'Local flour, real butter, organic eggs. No preservatives, no shortcuts, no compromises.',
+        desc: 'Local flour, real butter, food-grade lye. No shortcuts, no frozen dough, no compromises.',
       },
       time: {
         title: 'Time',
-        desc: "Good bread can't be rushed. We give dough the hours it needs to develop flavor and texture.",
+        desc: "Good pretzels can't be rushed. We give our dough the hours it needs to develop flavor and chew.",
       },
     },
     team: {
       title: 'Meet the Bakers',
-      subtitle: 'The people behind your morning pastry',
+      subtitle: 'The people behind your pretzel',
       members: [
         {
-          name: 'Sarah Martinez',
+          name: 'William Buttlicker',
           role: 'Head Baker & Founder',
-          bio: 'Started Kanz with a sourdough starter and a dream. Still wakes at 4am every day.',
+          bio: 'Founded Pretzel Day Bakery with a family recipe and an iron will. Insists every customer is family — especially the ones with unusual last names.',
         },
         {
-          name: 'James Chen',
-          role: 'Pastry Chef',
-          bio: 'Trained in Paris, returned home to make croissants that rival the Seine.',
+          name: 'Stanley "The Manly" Hudson',
+          role: 'Baker',
+          bio: 'Quiet. Efficient. Makes the best jalapeño cheddar pretzel in the region. Will not discuss crossword puzzles during business hours.',
         },
         {
-          name: 'Maya Thompson',
-          role: 'Cake Designer',
-          bio: 'Turns celebrations into edible art. Every cake tells a story.',
+          name: 'Pamela "Pamcake" Beesly',
+          role: 'Baker',
+          bio: 'Joined the team for the love of baking. Responsible for the cinnamon sugar pretzel recipe and all in-store watercolor signage.',
         },
       ],
     },
     visit: {
       title: 'Visit Us Soon',
-      subtitle: "We're on Baker Street, just past the park. Come for the bread, stay for the warmth.",
+      subtitle: "We're on Baker Street, just past the park. Come for the pretzel, stay for the warmth.",
       address: '123 Baker Street',
       weekdays: 'Monday – Saturday: 7am – 7pm',
       sunday: 'Sunday: 8am – 5pm',
@@ -111,7 +111,7 @@ const en = {
   menu: {
     hero: {
       title: 'Our Menu',
-      subtitle: 'Every item baked fresh daily with local ingredients',
+      subtitle: 'Every pretzel hand-twisted and baked fresh daily',
     },
     filter: {
       all: 'All Items',
@@ -164,7 +164,7 @@ const en = {
   order: {
     hero: {
       title: 'Schedule Your Order',
-      subtitle: 'Perfect for celebrations, office events, or stocking up on favorites',
+      subtitle: 'Perfect for celebrations, office events, or stocking up on pretzels',
     },
     type: {
       title: 'Order Type',
@@ -227,7 +227,7 @@ const en = {
   },
   footer: {
     tagline:
-      'Handcrafted breads, pastries, and celebration cakes baked fresh daily. Every bite tells a story of tradition and warmth.',
+      'Hand-twisted soft pretzels — sweet, savory, and classic — baked fresh every morning. Because every day should be Pretzel Day.',
     quickLinks: 'Quick Links',
     about: 'About Us',
     placeOrder: 'Place Order',
@@ -235,13 +235,13 @@ const en = {
     address: '123 Baker Street',
     weekdays: 'Monday – Saturday: 7am – 7pm',
     sunday: 'Sunday: 8am – 5pm',
-    copyright: '© {{year}} Kanz Bakery. All rights reserved.',
+    copyright: '© {{year}} Pretzel Day Bakery. All rights reserved.',
   },
   findUs: {
     badge: 'Riyadh Locations',
     hero: {
       title: 'Find Us',
-      subtitle: 'Three branches across Riyadh — always a fresh loaf nearby.',
+      subtitle: 'Three branches across Riyadh — always a fresh pretzel nearby.',
     },
     selected: 'Viewing',
     getDirections: 'Get Directions',
