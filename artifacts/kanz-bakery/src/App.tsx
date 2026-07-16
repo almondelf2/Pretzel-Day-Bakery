@@ -3,10 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import { Header } from '@/components/Header';
 import { CartProvider } from '@/contexts/CartContext';
 import { Footer } from '@/components/Footer';
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [location]);
+  return null;
+}
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
 import MenuPage from '@/pages/MenuPage';
@@ -32,6 +38,7 @@ function Router() {
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <DirectionSync />
+      <ScrollToTop />
       <Header />
       <main className="flex-1">
         <Switch>
