@@ -54,7 +54,15 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border/40">
           <p className="text-xs text-muted-foreground text-center">
-            {t('footer.copyright', { year })}
+            I learned how to use Replit at the world's largest AI Training Hackathon, you can too by{' '}
+            <a
+              href="https://try.ka.nz/hack"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground transition-colors"
+            >
+              clicking here
+            </a>
           </p>
         </div>
       </div>
