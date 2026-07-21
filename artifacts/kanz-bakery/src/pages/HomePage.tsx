@@ -54,8 +54,8 @@ export default function HomePage() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 flex flex-col items-center justify-center gap-6">
                 <img
-                  src="/images/pretzel-watercolor.png"
-                  alt="Pretzel Day Bakery"
+                  src="/images/dundie.png"
+                  alt="Dundie Award"
                   className="w-48 h-48 sm:w-64 sm:h-64 object-contain drop-shadow-lg"
                 />
                 <div className="text-center space-y-1">
