@@ -1,5 +1,4 @@
 import { Link } from 'wouter';
-import { useTranslation } from 'react-i18next';
 
 /** Pretzel SVG mark — the Pretzel Day Bakery icon. */
 export function PretzelMark({ className = 'w-7 h-7' }: { className?: string }) {
@@ -14,26 +13,6 @@ export function PretzelMark({ className = 'w-7 h-7' }: { className?: string }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {/*
-        Three-path pretzel construction (100×100 viewBox):
-
-        Body junctions (top of the bottom oval):
-          Left = (28, 60)   Right = (72, 60)
-
-        Each arm starts at one body junction, loops around its hole,
-        then lands on the OPPOSITE side of the knot — that crossing is
-        the signature pretzel X, visible at ≈ (50, 30).
-
-        Knot endpoints:
-          Left arm ends  → right side of knot (62, 46)
-          Right arm ends → left  side of knot (38, 46)
-
-        Three holes created:
-          • Left hole  — enclosed by the left-arm loop
-          • Right hole — enclosed by the right-arm loop
-          • Middle hole — framed by the two arms above and the oval below
-      */}
-
       {/* Bottom oval body */}
       <path d="M28,60 C12,60 6,72 6,82 C6,92 24,97 50,97 C76,97 94,92 94,82 C94,72 88,60 72,60" />
 
@@ -58,17 +37,34 @@ interface BrandLogoProps {
   className?: string;
 }
 
-/** Full Pretzel Day Bakery logo: pretzel mark + wordmark. */
+/**
+ * Full Pretzel Day Bakery logo styled after The Office door sign:
+ * black badge · stacked "The / Pretzel / Bakery" text · bordered pretzel icon.
+ */
 export function BrandLogo({ linked = true, className = '' }: BrandLogoProps) {
-  const { t } = useTranslation();
-
   const inner = (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/15">
-        <PretzelMark className="w-5 h-5 text-primary" />
+    <span
+      className={`inline-flex items-stretch bg-neutral-900 rounded-md overflow-hidden shadow-sm select-none ${className}`}
+      aria-label="Pretzel Day Bakery — home"
+    >
+      {/* Left: stacked wordmark */}
+      <span className="flex flex-col justify-center px-3 py-2 gap-0">
+        <span className="text-white/50 font-sans text-[8px] leading-none tracking-[0.2em] uppercase">
+          The
+        </span>
+        <span className="text-white font-sans font-bold text-[14px] leading-tight tracking-tight">
+          Pretzel
+        </span>
+        <span className="text-white font-sans font-bold text-[14px] leading-tight tracking-tight">
+          Bakery
+        </span>
       </span>
-      <span className="font-serif font-bold text-xl tracking-tight text-foreground">
-        {t('nav.brand')}
+
+      {/* Right: white-bordered box with pretzel replacing the people */}
+      <span className="flex items-center justify-center px-2.5 py-2">
+        <span className="border border-white/60 rounded-sm p-1.5 flex items-center justify-center">
+          <PretzelMark className="w-6 h-6 text-white" />
+        </span>
       </span>
     </span>
   );
