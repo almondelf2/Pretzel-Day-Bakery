@@ -52,7 +52,7 @@ const en = {
         'A neighborhood pretzel bakery built on tradition, a secret lye-dip recipe, and the firm belief that every day should be Pretzel Day.',
     },
     story: {
-      title: 'Every Day is Pretzel Day',
+      title: 'Every day is Pretzel Day since 2005',
       p1: "Pretzel Day Bakery was born on a single, magical afternoon in 2005 when William Buttlicker walked into a regional baking competition with a hand-twisted soft pretzel and walked out with a trophy and a calling.",
       p2: "We open before sunrise, shaping and dipping each pretzel by hand. By the time the doors open, the salt is crusted just right, the dough is chewy in the center, and the whole block smells incredible.",
       p3: "What started as a one-man operation now has a small but legendary crew. Stanley keeps the rhythm. Pam keeps it beautiful. William keeps reminding everyone that his name is pronounced exactly how it looks.",
