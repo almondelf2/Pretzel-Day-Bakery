@@ -15,7 +15,7 @@ const en = {
         'Every pretzel hand-twisted, lye-dipped, and baked to perfection. Sweet, savory, or classic — there\'s a pretzel for every mood.',
       viewMenu: 'View Menu',
       placeOrder: 'Place an Order',
-      tagline: 'Every day is pretzel day since 2005',
+      tagline: 'Award-Winning Pretzels',
     },
     stats: {
       hours: '7am – 7pm',
