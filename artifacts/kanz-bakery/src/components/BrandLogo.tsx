@@ -1,29 +1,36 @@
 import { Link } from 'wouter';
 
 /** Pretzel SVG mark — the Pretzel Day Bakery icon. */
-export function PretzelMark({ className = 'w-7 h-7' }: { className?: string }) {
+export function PretzelMark({
+  className = 'w-7 h-7',
+  gapColor = 'white',
+}: {
+  className?: string;
+  /** Color of the crossing-gap blocker — should match the background behind the icon. */
+  gapColor?: string;
+}) {
   return (
     <svg
       viewBox="0 0 100 100"
       className={className}
       fill="none"
       stroke="currentColor"
-      strokeWidth="12"
+      strokeWidth="7"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {/* Bottom oval body */}
-      <path d="M28,60 C12,60 6,72 6,82 C6,92 24,97 50,97 C76,97 94,92 94,82 C94,72 88,60 72,60" />
+      {/* Bottom U / oval connecting the two arms */}
+      <path d="M30,63 C12,63 5,74 5,84 C5,94 22,98 50,98 C78,98 95,94 95,84 C95,74 88,63 70,63" />
 
-      {/* Left arm — goes under at the knot crossing */}
-      <path d="M28,60 C14,58 6,48 6,34 C6,20 14,12 24,12 C34,12 46,22 62,46" />
+      {/* Left arm — loops up and around the left hole, ends at right side of knot */}
+      <path d="M30,63 C14,61 5,50 5,36 C5,20 15,8 28,8 C41,8 52,20 64,44" />
 
-      {/* Crossing gap — white blocker so left arm reads as going under */}
-      <path d="M44,26 C46,28 50,31 56,34" stroke="white" strokeWidth="16" strokeLinecap="round" />
+      {/* Gap blocker — hides left arm so it reads as going under */}
+      <path d="M47,29 C49,32 52,36 57,41" stroke={gapColor} strokeWidth="11" strokeLinecap="round" />
 
-      {/* Right arm — goes over at the knot crossing */}
-      <path d="M72,60 C86,58 94,48 94,34 C94,20 86,12 76,12 C66,12 54,22 38,46" />
+      {/* Right arm — loops up and around the right hole, goes over, ends at left side of knot */}
+      <path d="M70,63 C86,61 95,50 95,36 C95,20 85,8 72,8 C59,8 48,20 36,44" />
     </svg>
   );
 }
@@ -62,8 +69,8 @@ export function BrandLogo({ linked = true, className = '' }: BrandLogoProps) {
 
       {/* Right: white-bordered box with pretzel replacing the people */}
       <span className="flex items-center justify-center px-2.5 py-2">
-        <span className="border border-white/60 rounded-sm p-1.5 flex items-center justify-center">
-          <PretzelMark className="w-6 h-6 text-white" />
+        <span className="border border-white/60 rounded-sm w-9 h-9 flex items-center justify-center" style={{ fontSize: '22px', lineHeight: 1 }}>
+          🥨
         </span>
       </span>
     </span>
