@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Kanz Bakery"
+title = "Pretzel Day Bakery"
 version = "1.0.0"
 id = "artifacts/kanz-bakery"
 router = "path"
